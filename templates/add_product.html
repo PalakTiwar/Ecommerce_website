@@ -1,0 +1,18 @@
+<!-- templates/add_product.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+</head>
+<body>
+    <h2>Add New Product</h2>
+    <form method="POST" action="/add_product">
+        <input type="text" name="name" placeholder="Product Name" required><br>
+        <textarea name="description" placeholder="Description"></textarea><br>
+        <input type="number" step="0.01" name="price" placeholder="Price" required><br>
+        <input type="number" name="stock_quantity" placeholder="Stock Quantity" required><br>
+        <input type="text" name="image_url" placeholder="Image URL"><br><br>
+        <input type="submit" value="Add Product">
+    </form>
+</body>
+</html>
