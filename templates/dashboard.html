@@ -1,0 +1,62 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Link the external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Removed the inline <style> block -->
+</head>
+<body>
+
+    <!-- Hamburger Menu Button (HTML remains the same) -->
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
+    <!-- Sidebar Navigation (HTML remains the same) -->
+    <nav class="sidebar" id="sidebar" aria-hidden="true">
+        <button class="close-btn" id="close-sidebar-btn" aria-label="Close navigation">×</button>
+        <div class="sidebar-header">
+            Categories
+        </div>
+        <ul>
+            <li><a href="#clothes">Clothes</a></li>
+            <li><a href="#electronics">Electronics</a></li>
+            <li><a href="#groceries">Groceries</a></li>
+            <li><a href="#homegoods">Home Goods</a></li>
+            <li><a href="#books">Books</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Page Content (HTML remains the same) -->
+    <div class="main-content" id="main-content">
+        <div class="dashboard-container">
+            <!-- Flash Messages (HTML remains the same) -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="flash-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            <h1>Welcome to your Dashboard, {{ username }}!</h1>
+            <p>You are successfully logged in.</p>
+            <p>Click the menu icon (☰) in the top left to browse categories.</p>
+
+            <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <!-- Link the external JavaScript file just before closing body -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Removed the inline <script> block -->
+</body>
+</html>
