@@ -32,6 +32,7 @@
             <li><a href="#books">Books</a></li>
         </ul>
     </nav>
+<<<<<<< HEAD
     <!-- Inside dashboard.html, maybe in the sidebar or main content -->
 {% if session.user_type == 'Admin' %}
 <p><a href="{{ url_for('add_product') }}">Add New Product</a></p>
@@ -41,6 +42,9 @@
 <!-- Rest of your dashboard content -->
 <h1>Welcome to your Dashboard, {{ username }}!</h1>
 <!-- ... -->
+=======
+
+>>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
     <!-- Main Page Content (HTML remains the same) -->
     <div class="main-content" id="main-content">
         <div class="dashboard-container">
@@ -63,6 +67,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Inside dashboard.html, likely within the .main-content div -->
 <div class="product-grid"> <!-- Add a container for styling -->
     <h2>Available Products</h2>
@@ -102,5 +107,10 @@
     </form>
     <!-- End Add to Cart Form -->
 </div>
+=======
+    <!-- Link the external JavaScript file just before closing body -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Removed the inline <script> block -->
+>>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
 </body>
 </html>
