@@ -1,0 +1,106 @@
+<!-- templates/dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Link the external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Removed the inline <style> block -->
+</head>
+<body>
+
+    <!-- Hamburger Menu Button (HTML remains the same) -->
+    <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+    </button>
+
+    <!-- Sidebar Navigation (HTML remains the same) -->
+    <nav class="sidebar" id="sidebar" aria-hidden="true">
+        <button class="close-btn" id="close-sidebar-btn" aria-label="Close navigation">×</button>
+        <div class="sidebar-header">
+            Categories
+        </div>
+        <ul>
+            <li><a href="#clothes">Clothes</a></li>
+            <li><a href="#electronics">Electronics</a></li>
+            <li><a href="#groceries">Groceries</a></li>
+            <li><a href="#homegoods">Home Goods</a></li>
+            <li><a href="#books">Books</a></li>
+        </ul>
+    </nav>
+    <!-- Inside dashboard.html, maybe in the sidebar or main content -->
+{% if session.user_type == 'Admin' %}
+<p><a href="{{ url_for('add_product') }}">Add New Product</a></p>
+<!-- Maybe add a link to view/manage products later -->
+{% endif %}
+
+<!-- Rest of your dashboard content -->
+<h1>Welcome to your Dashboard, {{ username }}!</h1>
+<!-- ... -->
+    <!-- Main Page Content (HTML remains the same) -->
+    <div class="main-content" id="main-content">
+        <div class="dashboard-container">
+            <!-- Flash Messages (HTML remains the same) -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <ul class="flash-messages">
+                    {% for category, message in messages %}
+                        <li class="flash-{{ category }}">{{ message }}</li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            <h1>Welcome to your Dashboard, {{ username }}!</h1>
+            <p>You are successfully logged in.</p>
+            <p>Click the menu icon (☰) in the top left to browse categories.</p>
+
+            <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+        </div>
+    </div>
+
+    <!-- Inside dashboard.html, likely within the .main-content div -->
+<div class="product-grid"> <!-- Add a container for styling -->
+    <h2>Available Products</h2>
+    {% if products %}
+        {% for product in products %}
+            <div class="product-card"> <!-- Basic structure for styling -->
+                {% if product.image_url %}
+                    <img src="{{ product.image_url }}" alt="{{ product.name }}" width="150"> <!-- Adjust width as needed -->
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="No Image" width="150"> <!-- Add a placeholder image in static/images -->
+                {% endif %}
+                <h3>{{ product.name }}</h3>
+                <p>{{ product.description or 'No description available.' }}</p>
+                <p><strong>Price: ${{ "%.2f"|format(product.price) }}</strong></p>
+                <!-- Add to Cart button will go here later -->
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No products available at the moment.</p>
+    {% endif %}
+</div>
+
+    <!-- Link the external JavaScript file just before closing body -->
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <!-- Removed the inline <script> block -->
+        <!-- Inside the .product-card loop in dashboard.html -->
+<div class="product-card">
+    <!-- ... (image, name, description, price) ... -->
+    <p><strong>Price: ${{ "%.2f"|format(product.price) }}</strong></p>
+
+    <!-- Add to Cart Form -->
+    <form action="{{ url_for('add_to_cart', product_id=product.product_id) }}" method="POST">
+        <!-- Optional: Quantity Input -->
+        <!-- <label for="quantity_{{ product.product_id }}">Qty:</label>
+        <input type="number" name="quantity" id="quantity_{{ product.product_id }}" value="1" min="1" style="width: 50px; margin-right: 5px;"> -->
+        <button type="submit" class="btn-add-cart">Add to Cart</button>
+    </form>
+    <!-- End Add to Cart Form -->
+</div>
+</body>
+</html>

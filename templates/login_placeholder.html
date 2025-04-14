@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        .flash-messages { list-style: none; padding: 0; margin: 0 0 20px 0; }
+        .flash-messages li { padding: 12px 15px; margin-bottom: 10px; border-radius: 5px; font-weight: 500; border: 1px solid transparent; }
+        .flash-success { color: #155724; background-color: #d4edda; border-color: #c3e6cb; }
+        /* Add .flash-error style if needed */
+    </style>
+</head>
+<body>
+    <!-- Display flash messages (like the success message from registration) -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="flash-messages">
+            {% for category, message in messages %}
+                <li class="flash-{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <h1>Login Page</h1>
+    <p>This is where the login form would go.</p>
+    <!-- You would typically add a login form here -->
+
+    <p><a href="{{ url_for('register') }}">Need to register?</a></p>
+</body>
+</html>
