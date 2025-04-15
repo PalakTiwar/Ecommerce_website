@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash, check_password_hash
 from config import MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DB
@@ -111,7 +110,6 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-=======
 import sqlite3
 # Import session from Flask!
 from flask import Flask, render_template, request, redirect, url_for, flash, session
@@ -167,14 +165,14 @@ def index():
 def register():
     if request.method == 'POST':
         # ... (Keep all your existing registration logic here) ...
->>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
+
         username = request.form.get('username')
         password = request.form.get('password')
         email = request.form.get('email')
         contact_info = request.form.get('contact_info', '')
         user_type = request.form.get('user_type')
         error = None
-<<<<<<< HEAD
+
 
         if not username:
             error = 'Username is required.'
@@ -202,7 +200,7 @@ def register():
             finally:
                 if conn:
                     conn.close()
-=======
+
         conn = None # Initialize conn
 
         if not username: error = 'Username is required.'
@@ -222,24 +220,22 @@ def register():
             except sqlite3.Error as e: error = f"Database error during validation: {e}"
             finally:
                 if conn: conn.close()
->>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
-
         if error is None:
             try:
                 password_hash = generate_password_hash(password)
                 conn = get_db()
                 cursor = conn.cursor()
                 cursor.execute(
-<<<<<<< HEAD
+
                     'INSERT INTO Users (username, password_hash, email, contact_info, user_type) VALUES (%s, %s, %s, %s, %s)',
-=======
+
                     'INSERT INTO users (username, password_hash, email, contact_info, user_type) VALUES (?, ?, ?, ?, ?)',
->>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
+
                     (username, password_hash, email, contact_info, user_type)
                 )
                 conn.commit()
                 flash('Account created successfully! Please log in.', 'success')
-<<<<<<< HEAD
+
                 return redirect(url_for('login'))
             except mysql.connector.Error as e:
                 error = f"Database error during registration: {e}"
@@ -249,7 +245,7 @@ def register():
         if error:
             flash(error, 'error')
 
-=======
+
                 return redirect(url_for('login')) # Redirect to login after successful registration
             except sqlite3.Error as e: error = f"Database error during registration: {e}"
             finally:
@@ -257,7 +253,7 @@ def register():
         if error: flash(error, 'error')
 
     # For GET requests or if POST had errors, render the registration form
->>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
+
     return render_template(
         'register.html',
         username=request.form.get('username', ''),
@@ -266,11 +262,11 @@ def register():
         user_type=request.form.get('user_type', 'Customer')
     )
 
-<<<<<<< HEAD
+
 # --- Login ---
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-=======
+
 
 # --- NEW: Login Route ---
 @app.route('/login', methods=['GET', 'POST'])
@@ -284,17 +280,16 @@ def login():
         username = request.form.get('username')
         password = request.form.get('password')
         error = None
-<<<<<<< HEAD
-=======
+
         conn = None
->>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
+
 
         if not username or not password:
             error = 'Please enter both username and password.'
         else:
             try:
                 conn = get_db()
-<<<<<<< HEAD
+
                 cursor = conn.cursor(dictionary=True)
                 cursor.execute('SELECT * FROM Users WHERE username = %s', (username,))
                 user = cursor.fetchone()
@@ -311,7 +306,7 @@ def login():
 
             except mysql.connector.Error as e:
                 error = f"Database error during login: {e}"
-=======
+
                 cursor = conn.cursor()
                 cursor.execute('SELECT * FROM users WHERE username = ?', (username,))
                 user = cursor.fetchone() # Get the full user row (as a Row object)
@@ -334,12 +329,11 @@ def login():
             except sqlite3.Error as e:
                 error = f"Database error during login: {e}"
                 # Log this properly in a real app
->>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
+
             finally:
                 if conn:
                     conn.close()
 
-<<<<<<< HEAD
         if error:
             flash(error, 'error')
 
@@ -363,7 +357,7 @@ def logout():
     return redirect(url_for('login'))
 
 # --- Run the App ---
-=======
+
         # If login failed or database error occurred
         if error:
             flash(error, 'error')
@@ -395,7 +389,7 @@ def logout():
 
 
 # --- Run the App (Keep as is) ---
->>>>>>> cdbb0c8d369c522697bd8b8c4141dfe6f87e9839
+
 if __name__ == '__main__':
     init_db()
     app.run(debug=True) # Keep debug=True for development
