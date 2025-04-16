@@ -6,7 +6,7 @@ import decimal
 from functools import wraps
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_super_secret_key_replace_this'
+app.config['SECRET_KEY'] = config.SECRET_KEY
 
 # --- MySQL Database Connection ---
 def get_db():
